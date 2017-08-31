@@ -41,25 +41,55 @@ module.exports = class KoreaLiveWaterworks {
    *
    * @param {Request} option
    * @throws {Error} throw error when required key doesn't given
-   * @returns {Response}
+   * @return {Response}
    */
   async getWaterQuality (option) {
     this._verifyOption(['stDt', 'stTm', 'edDt', 'edTm', 'fcltyMngNo', 'sujNo', 'lilndDiv', 'numOfRows', 'pageNo'], option)
+
     option._type = 'json'
     const result = await rp({
       url: apiUri + uri.waterQuality,
       qs: option
     })
-    return result
+    return result.body
   }
 
   /**
-   * @typedef {Object} Option
+   * @typedef {Object} Request
    * @property {number} fcltyDivCode 시설 구분 코드 (1:취수장, 2:정수장, 3:가압장, 4:배수지), (required)
+   *
+   * @throws {Error} throw error when required key doesn't given
+   * @return {Response}
    */
-  async getFacilityList () {}
+  async getFacilityList (option) {
+    this._verifyOption(['fcltyDivCode'], option)
 
-  async supplyLgldCodeList () {}
+    option._type = 'json'
+    const result = await rp({
+      url: apiUri + uri.facilityList,
+      qs: option
+    })
+    return result.body
+  }
+
+  /**
+   * @typedef {Object} Response
+   * @property {string} addrName 법정동명
+   * @property {string} fcltyMngNm 시설관리명
+   * @property {string} fcltyMngNo 시설관리번호
+   * @property {string} lgldCode 법정동코드
+   * @property {string} lgldFullAddr 법정동 상세 주소
+   * @property {string} sujCode 사업장코드
+   * @property {string} upprLgldCode 상위법정동코드
+   *
+   * @return {Response}
+   */
+  async supplyLgldCodeList () {
+    const result = await rp({
+      url: apiUri + uri.supplyLgldCodeList
+    })
+    return result.body
+  }
 
   /**
    * @param {Array<string>} keys
