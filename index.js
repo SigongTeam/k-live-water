@@ -53,6 +53,7 @@ module.exports = class KoreaLiveWaterworks {
       url: this.apiUri + this.uri.waterQuality,
       qs: option
     })
+    this._checkResult(result)
     return JSON.parse(result)
   }
 
@@ -76,11 +77,12 @@ module.exports = class KoreaLiveWaterworks {
       url: this.apiUri + this.uri.facilityList,
       qs: option
     })
+    this._checkResult(result)
     return JSON.parse(result)
   }
 
   /**
-   * @typedef {Object} LgldResponse
+   * @typedef {Object} item
    * @property {string} addrName 법정동명
    * @property {string} fcltyMngNm 시설관리명
    * @property {string} fcltyMngNo 시설관리번호
@@ -89,12 +91,14 @@ module.exports = class KoreaLiveWaterworks {
    * @property {string} sujCode 사업장코드
    * @property {string} upprLgldCode 상위법정동코드
    *
+   * @typedef {Array}
    * @return {LgldResponse}
    */
   async supplyLgldCodeList () {
     const result = await rp({
       url: this.apiUri + this.uri.supplyLgldCodeList
     })
+    this._checkResult(result)
     return JSON.parse(result)
   }
 
@@ -109,5 +113,15 @@ module.exports = class KoreaLiveWaterworks {
         throw new Error(`Required option '${v}' isn't given.`)
       }
     })
+  }
+
+  /**
+   * @param {Object} body
+   * @throws {Error} throws error when body has unexpected result
+   */
+  _checkResult (body) {
+    if (!body || !body.results || !body.status) {
+      throw new Error('Unexpected response.')
+    }
   }
 }
