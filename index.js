@@ -10,7 +10,7 @@ module.exports = class KoreaLiveWaterworks {
     this.uri = {
       waterQuality: 'list',
       facilityList: 'fcltylist/codelist',
-      supplyLgldCodeList: 'supplyLgldCode/list'
+      supplylgIdCodeList: 'supplylgIdCode/list'
     }
   }
 
@@ -22,7 +22,7 @@ module.exports = class KoreaLiveWaterworks {
    * @property {string | number} edTm 조회 종료 시간 (required)
    * @property {string | number} fcltyMngNo 시설 관리 번호 (optional)
    * @property {string | number} sujNo 사업장 코드 (required)
-   * @property {string | number} lilndDiv 생활:1, 공업:2 (required)
+   * @property {string | number} liIndDiv 생활:1, 공업:2 (required)
    * @property {string | number} numOfRows 줄 수 (required)
    * @property {string | number} pageNo 페이지 번호 (required)
    *
@@ -86,17 +86,17 @@ module.exports = class KoreaLiveWaterworks {
    * @property {string} addrName 법정동명
    * @property {string} fcltyMngNm 시설관리명
    * @property {string} fcltyMngNo 시설관리번호
-   * @property {string} lgldCode 법정동코드
-   * @property {string} lgldFullAddr 법정동 상세 주소
+   * @property {string} lgIdCode 법정동코드
+   * @property {string} lgIdFullAddr 법정동 상세 주소
    * @property {string} sujCode 사업장코드
-   * @property {string} upprLgldCode 상위법정동코드
+   * @property {string} upprlgIdCode 상위법정동코드
    *
    * @typedef {Array}
-   * @return {LgldResponse}
+   * @return {lgIdResponse}
    */
-  async supplyLgldCodeList () {
+  async supplylgIdCodeList () {
     const result = await rp({
-      url: this.apiUri + this.uri.supplyLgldCodeList
+      url: this.apiUri + this.uri.supplylgIdCodeList
     })
     this._checkResult(result)
     return JSON.parse(result)
