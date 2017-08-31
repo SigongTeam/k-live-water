@@ -15,7 +15,7 @@ module.exports = class KoreaLiveWaterworks {
   }
 
   /**
-   * @typedef {Object} Request
+   * @typedef {Object} QualityRequest
    * @property {string} stDt 조회 시작 일자 (required)
    * @property {string | number} stTm 조회 시작 시간 (required)
    * @property {string} edDt 조회 종료 일자 (required)
@@ -26,7 +26,7 @@ module.exports = class KoreaLiveWaterworks {
    * @property {string | number} numOfRows 줄 수 (required)
    * @property {string | number} pageNo 페이지 번호 (required)
    *
-   * @typedef {Object} Response
+   * @typedef {Object} QualityResponse
    * @property {string} no 데이터 출력 번호 (ex: 1)
    * @property {string} occrrncDt 수질정보가 측정된 발생일시 (ex: 2015111911)
    * @property {string} fcltyMngNm 실시간수도정보시스템에서 관리 하는 시설관리명 (ex: 연초정수장)
@@ -41,9 +41,9 @@ module.exports = class KoreaLiveWaterworks {
    * @property {string} tbUnit 탁도단위 (ex: NTU)
    * @property {string} clUnit 잔류단위 (ex: MG/L)
    *
-   * @param {Request} option
+   * @param {QualityRequest} option
    * @throws {Error} throw error when required key doesn't given
-   * @return {Response}
+   * @return {QualityResponse}
    */
   async getWaterQuality (option) {
     this._verifyOption(['stDt', 'stTm', 'edDt', 'edTm', 'fcltyMngNo', 'sujNo', 'lilndDiv', 'numOfRows', 'pageNo'], option)
@@ -57,11 +57,16 @@ module.exports = class KoreaLiveWaterworks {
   }
 
   /**
-   * @typedef {Object} Request
+   * @typedef {Object} FacilityRequest
    * @property {number} fcltyDivCode 시설 구분 코드 (1:취수장, 2:정수장, 3:가압장, 4:배수지), (required)
    *
+   * @typedef {Object} FacilityResponse
+   * @property {string} fcltyMngNm 시설관리명
+   * @property {string} sujCode 사업장코드
+   *
+   * @param {FacilityRequest} option
    * @throws {Error} throw error when required key doesn't given
-   * @return {Response}
+   * @return {FacilityResponse}
    */
   async getFacilityList (option) {
     this._verifyOption(['fcltyDivCode'], option)
@@ -75,7 +80,7 @@ module.exports = class KoreaLiveWaterworks {
   }
 
   /**
-   * @typedef {Object} Response
+   * @typedef {Object} LgldResponse
    * @property {string} addrName 법정동명
    * @property {string} fcltyMngNm 시설관리명
    * @property {string} fcltyMngNo 시설관리번호
@@ -84,7 +89,7 @@ module.exports = class KoreaLiveWaterworks {
    * @property {string} sujCode 사업장코드
    * @property {string} upprLgldCode 상위법정동코드
    *
-   * @return {Response}
+   * @return {LgldResponse}
    */
   async supplyLgldCodeList () {
     const result = await rp({
