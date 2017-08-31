@@ -1,0 +1,26 @@
+{
+  "name": "k-live-water",
+  "version": "1.0.0",
+  "description": "data.go.kr live water information api wrapper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SigongTeam/k-live-water.git"
+  },
+  "keywords": [
+    "water",
+    "information"
+  ],
+  "author": "a1p4ca",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SigongTeam/k-live-water/issues"
+  },
+  "homepage": "https://github.com/SigongTeam/k-live-water#readme",
+  "dependencies": {
+    "request-promise": "^4.2.1"
+  }
+}
