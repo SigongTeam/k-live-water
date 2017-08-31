@@ -53,7 +53,7 @@ module.exports = class KoreaLiveWaterworks {
       url: this.apiUri + this.uri.waterQuality,
       qs: option
     })
-    return result.body
+    return JSON.parse(result)
   }
 
   /**
@@ -76,7 +76,7 @@ module.exports = class KoreaLiveWaterworks {
       url: this.apiUri + this.uri.facilityList,
       qs: option
     })
-    return result.body
+    return JSON.parse(result)
   }
 
   /**
@@ -95,7 +95,7 @@ module.exports = class KoreaLiveWaterworks {
     const result = await rp({
       url: this.apiUri + this.uri.supplyLgldCodeList
     })
-    return result.body
+    return JSON.parse(result)
   }
 
   /**
