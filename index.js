@@ -1,15 +1,17 @@
 const rp = require('request-promise')
 
-const apiUri = 'http://apis.data.go.kr/B500001/rwis/waterQuality/'
-const uri = {
-  waterQuality: 'list',
-  facilityList: 'fcltylist/codelist',
-  supplyLgldCodeList: 'supplyLgldCode/list'
-}
-
 module.exports = class KoreaLiveWaterworks {
   constructor ({ key }) {
+    if (!key) {
+      throw new Error('Key isn\'t given')
+    }
     this.key = key
+    this.apiUri = `http://apis.data.go.kr/B500001/rwis/waterQuality/?serviceKey=${key}`
+    this.uri = {
+      waterQuality: 'list',
+      facilityList: 'fcltylist/codelist',
+      supplyLgldCodeList: 'supplyLgldCode/list'
+    }
   }
 
   /**
@@ -48,7 +50,7 @@ module.exports = class KoreaLiveWaterworks {
 
     option._type = 'json'
     const result = await rp({
-      url: apiUri + uri.waterQuality,
+      url: this.apiUri + this.uri.waterQuality,
       qs: option
     })
     return result.body
@@ -66,7 +68,7 @@ module.exports = class KoreaLiveWaterworks {
 
     option._type = 'json'
     const result = await rp({
-      url: apiUri + uri.facilityList,
+      url: this.apiUri + this.uri.facilityList,
       qs: option
     })
     return result.body
@@ -86,7 +88,7 @@ module.exports = class KoreaLiveWaterworks {
    */
   async supplyLgldCodeList () {
     const result = await rp({
-      url: apiUri + uri.supplyLgldCodeList
+      url: this.apiUri + this.uri.supplyLgldCodeList
     })
     return result.body
   }
