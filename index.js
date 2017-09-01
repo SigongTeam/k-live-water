@@ -39,7 +39,7 @@ module.exports = class KoreaLiveWaterworks {
    * @property {string} edDt 조회 종료 일자 (required)
    * @property {string | number} edTm 조회 종료 시간 (required)
    * @property {string | number} fcltyMngNo 시설 관리 번호 (optional)
-   * @property {string | number} sujNo 사업장 코드 (required)
+   * @property {string | number} sujCode 사업장 코드 (required)
    * @property {string | number} liIndDiv 생활:1, 공업:2 (required)
    * @property {string | number} numOfRows 줄 수 (required)
    * @property {string | number} pageNo 페이지 번호 (required)
@@ -64,12 +64,15 @@ module.exports = class KoreaLiveWaterworks {
    * @return {QualityResponse}
    */
   async getWaterQuality (option) {
-    this._verifyOption(['stDt', 'stTm', 'edDt', 'edTm', 'fcltyMngNo', 'sujNo', 'liIndDiv', 'numOfRows', 'pageNo'], option)
+    this._verifyOption(['stDt', 'stTm', 'edDt', 'edTm', 'fcltyMngNo', 'sujCode', 'liIndDiv', 'numOfRows', 'pageNo'], option)
 
     const data = await this.get(URI.waterQuality, option)
-    const ret = []
-    data.items.item.forEach(v => {
-      ret.push({
+
+    const size = Object.keys(data.items || []).length
+    if (size === 0) return []
+
+    const f = (v) => {
+      return {
         id: v.no,
         observed: v.occrrncDt,
         facilityName: v.fcltyMngNm,
@@ -83,7 +86,14 @@ module.exports = class KoreaLiveWaterworks {
         phUnit: v.phUnit,
         tbUnit: v.tbUnit,
         clUnit: v.clUnit
-      })
+      }
+    }
+
+    if (size === 1) return [f(data.items.item)]
+
+    const ret = []
+    data.items.item.forEach(v => {
+      ret.push(f(v))
     })
 
     return ret
