@@ -4,7 +4,7 @@ const ENDPOINT_URI = 'http://apis.data.go.kr/B500001/rwis/waterQuality/'
 const URI = {
   waterQuality: 'list',
   facilityList: 'fcltylist/codelist',
-  supplylgIdCodeList: 'supplylgIdCode/list'
+  supplylgIdCodeList: 'supplyLgldCode/list'
 }
 
 module.exports = class KoreaLiveWaterworks {
@@ -119,20 +119,34 @@ module.exports = class KoreaLiveWaterworks {
   }
 
   /**
-   * @typedef {Object} item
+   * @typedef {Object} lgIdResponse
    * @property {string} addrName 법정동명
-   * @property {string} fcltyMngNm 시설관리명
-   * @property {string} fcltyMngNo 시설관리번호
+   * @property {string} facilityName 시설관리명
+   * @property {string} facilityId 시설관리번호
    * @property {string} lgIdCode 법정동코드
    * @property {string} lgIdFullAddr 법정동 상세 주소
    * @property {string} sujCode 사업장코드
-   * @property {string} upprlgIdCode 상위법정동코드
+   * @property {string} parentLgId 상위법정동코드
    *
-   * @typedef {Array}
    * @return {lgIdResponse}
    */
-  async supplylgIdCodeList () {
-    return await this.get(URI.supplylgIdCodeList, {})
+  async getSupplyLgIdCodeList () {
+    const data = await this.get(URI.supplylgIdCodeList, {})
+
+    const ret = []
+    data.items.item.forEach(v => {
+      ret.push({
+        addrName: v.addrName,
+        facilityName: v.fcltyMngNm,
+        facilityId: v.fcltyMngNo,
+        lgIdCode: v.lgldCode,
+        lgIdFullAddr: v.lgldFullAddr,
+        code: v.sujCode,
+        parentLgId: v.upprLgldCode
+      })
+    })
+
+    return ret
   }
 
   /**
