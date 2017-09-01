@@ -22,7 +22,7 @@ module.exports = class KoreaLiveWaterworks {
     const { data } = await axios.get(ENDPOINT_URI + request, { params })
 
     if (!data || !data.response || !data.response.header || !data.response.body) {
-      throw new Error('Unexpected response data from geocode')
+      throw new Error('Unexpected response data')
     }
 
     if (data.response.header.resultCode !== '00') {
@@ -64,7 +64,7 @@ module.exports = class KoreaLiveWaterworks {
    * @return {QualityResponse}
    */
   async getWaterQuality (option) {
-    this._verifyOption(['stDt', 'stTm', 'edDt', 'edTm', 'fcltyMngNo', 'sujCode', 'liIndDiv', 'numOfRows', 'pageNo'], option)
+    this._verifyOption(['stDt', 'stTm', 'edDt', 'edTm', 'sujCode', 'liIndDiv', 'numOfRows', 'pageNo'], option)
 
     const data = await this.get(URI.waterQuality, option)
 
