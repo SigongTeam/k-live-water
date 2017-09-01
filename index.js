@@ -85,7 +85,8 @@ module.exports = class KoreaLiveWaterworks {
         updated: v.chgDt,
         phUnit: v.phUnit,
         tbUnit: v.tbUnit,
-        clUnit: v.clUnit
+        clUnit: v.clUnit,
+        totalCount: data.totalCount
       }
     }
 
