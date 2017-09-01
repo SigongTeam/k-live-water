@@ -67,7 +67,7 @@ module.exports = class KoreaLiveWaterworks {
     this._verifyOption(['stDt', 'stTm', 'edDt', 'edTm', 'fcltyMngNo', 'sujNo', 'liIndDiv', 'numOfRows', 'pageNo'], option)
 
     const data = await this.get(URI.waterQuality, option)
-    const ret = [];
+    const ret = []
     data.items.item.forEach(v => {
       ret.push({
         id: v.no,
@@ -160,15 +160,5 @@ module.exports = class KoreaLiveWaterworks {
         throw new Error(`Required option '${v}' isn't given.`)
       }
     })
-  }
-
-  /**
-   * @param {Object} body
-   * @throws {Error} throws error when body has unexpected result
-   */
-  _checkResult (body) {
-    if (!body || !body.response || !body.response.header || !body.response.body) {
-      throw new Error('Unexpected response.')
-    }
   }
 }
