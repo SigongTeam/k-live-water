@@ -1,6 +1,6 @@
 {
   "name": "k-live-water",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "data.go.kr live water information api wrapper",
   "main": "index.js",
   "scripts": {
