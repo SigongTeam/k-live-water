@@ -67,7 +67,7 @@ module.exports = class KoreaLiveWaterworks {
     this._verifyOption(['stDt', 'stTm', 'edDt', 'edTm', 'fcltyMngNo', 'sujNo', 'liIndDiv', 'numOfRows', 'pageNo'], option)
 
     const data = await this.get(URI.waterQuality, option)
-    const ret = [];
+    const ret = []
     data.items.item.forEach(v => {
       ret.push({
         id: v.no,
@@ -132,7 +132,8 @@ module.exports = class KoreaLiveWaterworks {
    * @return {lgIdResponse}
    */
   async supplylgIdCodeList () {
-    return await this.get(URI.supplylgIdCodeList, {})
+    const result = await this.get(URI.supplylgIdCodeList, {})
+    return result
   }
 
   /**
