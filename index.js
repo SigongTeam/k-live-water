@@ -58,6 +58,7 @@ module.exports = class KoreaLiveWaterworks {
    * @property {string} phUnit pH단위 (ex: PH)
    * @property {string} tbUnit 탁도단위 (ex: NTU)
    * @property {string} clUnit 잔류단위 (ex: MG/L)
+   * @property {number} totalCount 데이터 전체 개수
    *
    * @param {QualityRequest} option
    * @throws {Error} throw error when required key doesn't given
